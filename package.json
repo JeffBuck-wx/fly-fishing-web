@@ -1,0 +1,22 @@
+{
+  "name": "fly-fishing-web",
+  "version": "1.0.0",
+  "description": "Fly fishing website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JeffBuck-wx/fly-fishing-web.git"
+  },
+  "author": "Jeff Buck",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JeffBuck-wx/fly-fishing-web/issues"
+  },
+  "homepage": "https://github.com/JeffBuck-wx/fly-fishing-web#readme",
+  "dependencies": {
+    "mariadb": "^2.5.2"
+  }
+}
