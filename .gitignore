@@ -1,0 +1,5 @@
+# for security reasons, do not track .env
+.env
+
+# other files to ignore
+
