@@ -2,4 +2,7 @@
 .env
 
 # other files to ignore
-
+*.tar.gz
+*.tgz
+*.tar.gx
+*.tgx
