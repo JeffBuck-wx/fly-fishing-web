@@ -7,6 +7,5 @@
 *.tar.gx
 *.tgx
 
-#pycache
+# python cache
 __pycache__
-
