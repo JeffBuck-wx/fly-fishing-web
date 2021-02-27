@@ -39,12 +39,13 @@ class DBA:
             print("OK. Connected to {}".format(config['host']))
             return_value = True
         except mariadb.Error as err:
-            if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-                print("ERROR: Incorrect username or password")
-            elif err.errno == errorcode.ER_BAD_DB_ERROR:
-                print("ERROR: Database does not exist")
-            else:
-                print(err)
+            print(f"Error connecting to MariaDB Platform: {err}")
+            #if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            #    print("ERROR: Incorrect username or password")
+            #elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            #    print("ERROR: Database does not exist")
+            #else:
+            #    print(err)
             return_value = False
         return return_value
 
