@@ -6,3 +6,6 @@
 *.tgz
 *.tar.gx
 *.tgx
+
+# python cache
+__pycache__

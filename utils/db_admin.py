@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-import mysql.connector
-from mysql.connector import errorcode
+import mariadb
 
 
 class DBA:
@@ -36,10 +35,10 @@ class DBA:
         """Return a DB connection"""
         print('HOST: {}'.format(self.host))
         try:
-            self.conn  = mysql.connector.connect(**config)
+            self.conn  = mariadb.connect(**config)
             print("OK. Connected to {}".format(config['host']))
             return_value = True
-        except mysql.connector.Error as err:
+        except mariadb.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print("ERROR: Incorrect username or password")
             elif err.errno == errorcode.ER_BAD_DB_ERROR:
@@ -56,7 +55,7 @@ class DBA:
         try:
             self.cursor = self.conn.cursor()
             return_value = True
-        except mysql.connector.Error as err:
+        except mariadb.Error as err:
             print("ERROR. Could not create cursor.")
             return_value = False
         return return_value
@@ -216,7 +215,7 @@ class DBA:
             self.cursor.execute(query_string, data)
             print('OK.{}'.format(query_description))
             return_value = True
-        except mysql.connector.Error as err:
+        except mariadb.Error as err:
             print('ERROR. {}\n    {}'.format(query_description, err))
             return_value = False
         return return_value

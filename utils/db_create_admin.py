@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import mysql.connector
+import mariadb
 import sys
 
 
@@ -8,10 +8,10 @@ try:
     password = sys.argv[2]
 except:
     username = 'jeff'
-    password = 'Diana!2005'
+    password = 'Diana1'
 
 
-cnx = mysql.connector.connect(
+cnx = mariadb.connect(
         user='root', 
         password='Minnesota+1991',
         host='127.0.0.1',
