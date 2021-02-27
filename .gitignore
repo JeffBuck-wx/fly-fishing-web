@@ -6,3 +6,7 @@
 *.tgz
 *.tar.gx
 *.tgx
+
+#pycache
+__pycache__
+
