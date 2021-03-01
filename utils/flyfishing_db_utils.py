@@ -11,6 +11,7 @@ class DBA:
     config = None
     host = ''
     database = ''
+    autocommit = False
     verbose = False
 
 
@@ -18,8 +19,24 @@ class DBA:
     """Class methods"""
     def __init__(self, config):
         """Initialize the DB connection and cursor"""
-        # TODO: add config validator.
+        # host
         self.host = config['host']
+        
+        # database
+        try:
+            self.database = config['database']
+        except:
+            print('WARNING: database name not set.')
+        
+        # autocommit
+        try:
+            if isinstance(config['autocommit'], bool):
+                self.autocommit = config['autocommit']
+        except:
+            # leave it False/default
+            pass
+
+
         self.connect_to_database(config)
         self.create_cursor()
         
@@ -102,29 +119,15 @@ class DBA:
 
 
     def insert_multiple_rows(self, query, data_sets, table_name=''):
-        """Run multiple inserts"""
-        good_data = []
-        bad_data = []
-        return_values = []
+        """Execute multiple inserts"""
         
-        for data in data_sets:
-            return_value = self.insert_row(query, data)
-            if return_value:
-                good_data.append(data)
-            else:
-                bad_data.append(data)
-        
-        if len(bad_data) == 0:
-            print('    Table: {} - {} rows inserted.'.format(table_name, len(good_data)))
-            return_value= True
-        else:
-            print('ERROR: Bad data_set(s)...')
-            for data in bad_data:
-                print('    %s' % data)
-            return_value = False
-        
+        print(table_name)
+        print(query)
+        for d in data_sets:
+            print(d)
+        print("")
+        return_value = self.cursor.executemany(query, data_sets)
         return return_value
-
 
 
     def insert_row(self, query, data):
@@ -159,20 +162,45 @@ class DBA:
         return return_value
 
 
-
-    def create_user(self, username, password, mode='IF NOT EXISTS'):
-        """Create a USER"""
-        mode = mode.upper()
-        modes = ['IF NOT EXISTS']
-        description = '{} created'.format(username)
-        if mode in modes:
-            query = "CREATE USER %s %s@%s IDENTIFIED BY '%s';"
-            data = (mode, username, self.host, password)
-            return_value = self.run_query(query % data, query_description=description)
-        else:
-            print('ERROR. Unrecognized mode {}'.format(mode))
+    def drop_user(self, username):
+        """Drop a USER"""
+        description = 'Dropping user ({})'.format(username)
+        query = "DROP USER IF EXISTS %s;"
+        data = (username)
+        return_value = self.run_query(query % data, query_description=description)
+        if not return_value:
+            print('ERROR. Uanble to drop user {}'.format(username))
             return_value = False
         return return_value
+
+
+    def create_user(self, username, password, hostname, database, grants):
+        """Create a USER"""
+        grants = grants.upper()
+        
+        # Create the user
+        description = 'Creating user ({})'.format(username)
+        query = "CREATE USER IF NOT EXISTS '%s'@'%s' IDENTIFIED BY '%s'"
+        data = (username, hostname, password)
+        return_value_user = self.run_query(query % data, query_description=description)
+        print(query % data)
+
+        # Set grants
+        description = 'Updating grants on {} ({})'.format(database, username)
+        if grants == 'SUPERUSER':
+            query = "GRANT ALL ON %s.* TO %s@'%s'"
+        elif grants == 'ADMIN':
+            query = "GRANT ALL ON %s.* TO %s@'%s' WITH GRANT OPTION"
+        else:
+            query = "GRANT INSERT,UPDATE,SELECT ON %s.* TO %s@'%s'"
+        data = (database, username, hostname)
+        return_value_grant = self.run_query(query % data, query_description=description)
+        print(query % data)
+
+        # Flush privileges
+        return_value_flush = self.flush_privileges()
+
+        return return_value_user and return_value_grant and return_value_flush
 
 
 

@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
-import db_admin
+import flyfishing_db_utils
 import time
 
 
 def main():
-    # connect to database using db_admin module
+    # connect to database using flyfishing_db_utils module
     config = {
         'user': 'jeff',
-        'password':'Diana!2005',
+        'password':'Diana1',
         'host':'localhost'
     }
-    db = db_admin.DBA(config)
+    db = flyfishing_db_utils.DBA(config)
     db_name = 'fly_fishing'
     
     # drop any existing database
@@ -18,6 +18,7 @@ def main():
 
     # create database
     create_database(db, db_name)
+    print("Using Database: %s" % db.database)
 
     # create users
     create_user_api(db)
@@ -29,15 +30,6 @@ def main():
     create_tables_beads(db)
     create_tables_thread(db)
     
-    # insert data
-    insert_eye_types(db)
-    insert_hook_types(db)
-    insert_bend_types(db)
-    insert_shank_types(db)
-    insert_hook_lengths(db)
-    insert_hook_weights(db)
-    insert_thread_materials(db)
-
     #close
     db.close()
 
@@ -186,7 +178,8 @@ def create_tables_beads(db):
         "    hole_type_id INT(2) NOT NULL AUTO_INCREMENT,"
         "    type VARCHAR(16) NOT NULL,"
         "    description VARCHAR(128),"
-        "  PRIMARY KEY (hole_type_id)"
+        "  PRIMARY KEY (hole_type_id),"
+        "  CONSTRAINT uc_bead_hole_type UNIQUE (type)"
         ") ENGINE=InnoDB"
     )
     TABLES['bead_shapes'] = (
@@ -258,12 +251,12 @@ def create_tables_thread(db):
         "  CONSTRAINT uc_thread_material UNIQUE (material)"
         ") ENGINE=InnoDB"
     )
-    TABLES['thread_material_types'] = (
+    TABLES['thread_twist_types'] = (
         "CREATE TABLE IF NOT EXISTS thread_twist_types ("
         "    thread_twist_id int(2) NOT NULL AUTO_INCREMENT,"
         "    twist VARCHAR(16) NOT NULL,"
         "    description VARCHAR(128),"
-        "  PRIMARY KEY (thread_material_id),"
+        "  PRIMARY KEY (thread_twist_id),"
         "  CONSTRAINT uc_thread_twist UNIQUE (twist)"
         ") ENGINE=InnoDB"
     )
@@ -284,7 +277,7 @@ def create_tables_thread(db):
         "      ON DELETE RESTRICT"
         "      ON UPDATE CASCADE,"
         "  CONSTRAINT fk_thread_twist"
-        "    FOREIGN KEY (twist_type)"
+        "    FOREIGN KEY (twist)"
         "      REFERENCES thread_twist_types(twist)"
         "      ON DELETE RESTRICT"
         "      ON UPDATE CASCADE"
@@ -292,140 +285,6 @@ def create_tables_thread(db):
     )
     db.create_multiple_tables(TABLES)
     return
-
-def insert_eye_types(db):
-    query = 'INSERT INTO eye_types(type, description) VALUES (%s, %s)'
-    data_sets = [
-        ('straight','Eye in-line with the shank. Common with treamers and trailing hook on articulated streamers. Larger hook gap compared to down eye. Arguably better hook-set rate.'),
-        ('down','Eye bent in toward hook gap. Typically used with nymphs and soft hackles. Provids a nice bead seat and provides extra room for matieral. Helps prevent crowding of the eye.'),
-        ('up','Frequently uses with emergers. Allows larger hook gap on smaller patterns. Larger knots will not interfer with hook-sets.'),
-        ('jig-60','60-degree bend. Forces the hook point to ride upright. The hook eye is typically parallel to the hook shank. Popular with competition style nymphing. Can be used with many nymphs, some emergers and streamers.'),
-        ('jig-90','90-degree bend. Forces the hook point to ride upright. The hook eye is typically parallel to the hook shank. Popular with competition style nymphing. Can be used with many nymphs, some emergers and streamers.')
-    ]
-    db.insert_multiple_rows(query, data_sets, 'eye_types')
-    return
-
-def insert_hook_types(db):
-    query = 'INSERT INTO hook_types(type, description) VALUES (%s, %s)'
-    data_sets = [
-        ('nymph','Commonly used for nymphs and wet flies, smaller sized suitable for some dry flies.'),
-        ('dry fly', 'Thin wire hook appropriate for dry flies.'),
-        ('scud', 'Curved shank imitates scud bodies and other nymphs/midges and dries.'),
-        ('streamer', 'Longer shanked hooks perfect for streamers.')
-    ]
-    db.insert_multiple_rows(query, data_sets, 'hook_types')
-    return
-
-def insert_bend_types(db):
-    query = 'INSERT INTO bend_types(type, description) VALUES (%s, %s)'
-    data_sets = [
-        ('sproat', 'Hook bend starts out gradaul with a sharper bend closer to the point.'),
-        ('round', 'Hood bend curves evenly from start of bend to the barb. Also known as the perfect or classic bend.')
-    ]
-    db.insert_multiple_rows(query, data_sets, 'bend_types')
-    return
-
-def insert_shank_types(db):
-    query = 'INSERT INTO shank_types(type, description) VALUES (%s, %s)'
-    data_sets = [
-        ('straight', 'Hook shank is straigh from eye to the start of the bend.'),
-        ('curved', 'Hook bend curves from the eye to the start of bend.'),
-        ('humped', 'Slightly curved shank from eye to the start of the bend.')
-    ]
-    db.insert_multiple_rows(query, data_sets, 'shank_types')
-    return
-
-def insert_hook_lengths(db):
-    query = 'INSERT INTO hook_lengths(length, description) VALUES (%s, %s)'
-    data_sets = [
-        ('3XS', '3X short'),
-        ('2XS', '2X short'),
-        ('1XS', '1X short'),
-        ('0X', 'Standard'),
-        ('1XL', '1X long'),
-        ('2XL', '2X long'),
-        ('3XL', '3X long'),
-        ('4XL', '4X long'),
-        ('6XL', '6X long')
-    ]
-    db.insert_multiple_rows(query, data_sets, 'hook_lengths')
-    return
-
-def insert_hook_weights(db):
-    query = 'INSERT INTO hook_weights(weight, description) VALUES (%s, %s)'
-    data_sets = [
-        ('2XF', '2X fine'),
-        ('1XF', '1X fine'),
-        ('0X', 'Standard'),
-        ('1XH', '1X heavy'),
-        ('2XH', '2X heavy'),
-        ('3XH', '3X heavy')
-    ]
-    db.insert_multiple_rows(query, data_sets, 'hook_weights')
-    return
-
-def insert_hole_types(db):
-    query = 'INSERT INTO hole_types(type, description) VALUES (%s, %s)'
-    data_sets = [
-        ('counter drilled', 'Standard bead.'),
-        ('slotted', 'Designed for jig hooks.'),
-        ('other', 'Non-specific hole type.'),
-        ('none', 'No hole in bead.')
-    ]
-    db.insert_multiple_rows(query, data_sets)
-    return
-
-def insert_bead_materials(db):
-    query = 'INSERT INTO bead_material_types(material, description) VALUES (%s, %s)'
-    data_sets = [
-        ('Nickel', 'Standard bead material'),
-        ('Brass', NULL),
-        ('Tungsten', 'For heavier flies, particularly euro-style nymphs'),
-        ('Glass', 'Glass bead')
-    ]
-    db.insert_multiple_rows(query, data_sets)
-    return
-
-def insert_thread_materials(db):
-    query = 'INSERT INTO thread_material_types(material, description) VALUES (%s, %s)'
-    data_sets = [
-        ('nylon', 'Common modern thread material. Light, strong, but with more stretch compared to polyester. Available in vibrant colors.'),
-        ('polyester', 'Common modern thread material. Light, strong with less streth than nylon.'),
-        ('kevlar', 'Super strong, but can be wiry'),
-        ('GSP', 'Gel spun polyethylene (GSP). Slightly stronger than Kevlar with a softer feel and texture.'),
-        ('silk', NULL)
-    ]
-    db.insert_multiple_rows(query, data_sets)
-    return
-
-def insert_thread_twists(db):
-    query = 'INSERT INTO thread_twist_types(twist, description) VALUES (%s, %s)'
-    data_sets = [
-        ('flat', 'Floss like, un-twisted filaments. Excellent ability to lay flat.'),
-        ('mono', 'Single strand thread.'),
-        ('twisted', 'Twisted filaments. Usually stronger, but prone to cutting matierals like foam.'),
-        ('braid', 'Braided filaments.'),
-        ('round', 'Rope like configuration.')
-    ]
-    db.insert_multiple_rows(query, data_sets)
-    return
-
-def create_user_api(db):
-    username = 'flyfisher_api'
-    db.create_user(username, 'WhitewaterNo.5_451', 'IF NOT EXISTS')
-    time.sleep(1)
-    db.update_grants(username, 'fly_fishing', ['UPDATE','INSERT','SELECT'])
-    db.flush_privileges()
-    return
-
-def create_user_dba(db):
-    username = 'flyfisher'
-    db.create_user(username, 'Alley@1839_Carl', 'IF NOT EXISTS')
-    time.sleep(1)
-    db.update_grants(username, 'fly_fishing', ['ALL'])
-    db.flush_privileges()
-    return
-
 
     
 if __name__ == '__main__':
