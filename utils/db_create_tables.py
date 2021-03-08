@@ -29,6 +29,7 @@ def main():
     create_tables_hooks(db)
     create_tables_beads(db)
     create_tables_thread(db)
+    create_tables_wire(db)
     
     #close
     db.close()
@@ -260,6 +261,15 @@ def create_tables_thread(db):
         "  CONSTRAINT uc_thread_twist UNIQUE (twist)"
         ") ENGINE=InnoDB"
     )
+    TABLES['thread_sizes'] = (
+        'CREATE TABLE IS NOT EXISTS thread_sizes ('
+        '    thread_size_id INT(2) NOT NULL AUTO_INCREMENT,'
+        '    size VARCHAR(16) NOT NULL,'
+        '    description VARCHAR(128),'
+        '  PRIMARY KEY (thread_size_id),'
+        '  CONTSTRAINT uc_thread_size UNIQUE (size)'
+        ') ENGINE=InnoDB'
+    )
     TABLES['thread'] = (
         "CREATE TABLE IF NOT EXISTS thread ("
         "    thread_id INT(4) NOT NULL AUTO_INCREMENT,"
@@ -280,11 +290,59 @@ def create_tables_thread(db):
         "    FOREIGN KEY (twist)"
         "      REFERENCES thread_twist_types(twist)"
         "      ON DELETE RESTRICT"
+        "      ON UPDATE CASCADE,"
+        "  CONSTRAINT fk_thread_size"
+        "    FOREIGN KEY (size)"
+        "      REFERENCES thread_sizes(size)"
+        "      ON DELETE RESTRICT"
         "      ON UPDATE CASCADE"
         ") ENGINE=InnoDB"
     )
     db.create_multiple_tables(TABLES)
     return
+
+def create_tables_wire(db):
+    TABLES = {}
+    TABLES['wire_materials'] = (
+        'CREATE TABLE IS NOT EXISTS wire_materials ('
+        '    wire_material_id INT(2) NOT NULL AUTO_INCREMENT,'
+        '    material VARCHAR(16) NOT NULL,'
+        '    description VARCHAR(128),'
+        '  PRIMARY KEY (wire_material_id),'
+        '  CONTSTRAINT uc_wire_material UNIQUE (matieral)'
+        ') ENGINE=InnoDB'
+    )
+    TABLES['wire_sizes'] = (
+        'CREATE TABLE IS NOT EXISTS wire_sizes ('
+        '    wire_size_id INT(2) NOT NULL AUTO_INCREMENT,'
+        '    size VARCHAR(16) NOT NULL,'
+        '    description VARCHAR(128),'
+        '  PRIMARY KEY (wire_size_id),'
+        '  CONTSTRAINT uc_wire_size UNIQUE (size)'
+        ') ENGINE=InnoDB'
+    )
+    TABLES['wire'] = (
+        'CREATE TABLE IF NOT EXISTS wire ('
+        '    wire_id INT(4) NOT NULL AUTO_INCREMENT,'
+        '    brand VARCHAR(16) NOT NULL,'
+        '    color VARCHAR(16) NOT NULL,'
+        '    material VARCHAR(16) NOT NULL,'
+        '    size VARCHAR(4) NOT NULL,'
+        '  PRIMARY KEY (wire_id),'
+        '  CONSTRAINT fk_wire_material'
+        '    FOREIGN KEY (material)'
+        '      REFERENCES wire_material_types(material)'
+        '      ON DELETE RESTRICT'
+        '      ON UPDATE CASCADE,'
+        '  CONSTRAINT fk_wire_size'
+        '    FOREIGN KEY (size)'
+        '      REFERENCES wire_size_types(size)'
+        '      ON DELETE RESTRICT'
+        '      ON UPDATE CASCADE'
+        ') ENGINE=InnoDB'
+
+    )
+
 
     
 if __name__ == '__main__':
