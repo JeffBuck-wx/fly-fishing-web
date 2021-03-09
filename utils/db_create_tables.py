@@ -26,7 +26,8 @@ def main():
     create_tables_beads(db)
     create_tables_thread(db)
     create_tables_wire(db)
-    
+    create_tables_dubbing(db)
+
     #close
     db.close()
 
