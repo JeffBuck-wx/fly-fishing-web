@@ -340,9 +340,33 @@ def create_tables_wire(db):
         '      ON DELETE RESTRICT'
         '      ON UPDATE CASCADE'
         ') ENGINE=InnoDB'
-
     )
 
+def create_tables_dubbing(db):
+    TABLES = {}
+    TABLES['dubbing_materials'] = (
+        'CREATE TABLE IS NOT EXISTS dubbing_materials ('
+        '    dubbing_material_id INT(2) NOT NULL AUTO_INCREMENT,'
+        '    material VARCHAR(16) NOT NULL,'
+        '    description VARCHAR(128),'
+        '  PRIMARY KEY (dubbing_material_id),'
+        '  CONTSTRAINT uc_dubbing_material UNIQUE (matieral)'
+        ') ENGINE=InnoDB'
+    )
+    TABLES['dubbing'] = (
+        'CREATE TABLE IF NOT EXISTS dubbing ('
+        '    dubbing_id INT(4) NOT NULL AUTO_INCREMENT,'
+        '    brand VARCHAR(16) NOT NULL,'
+        '    color VARCHAR(16) NOT NULL,'
+        '    material VARCHAR(16) NOT NULL,'
+        '  PRIMARY KEY (dubbing_id),'
+        '  CONSTRAINT fk_dubbing_material'
+        '    FOREIGN KEY (material)'
+        '      REFERENCES wire_material_types(material)'
+        '      ON DELETE RESTRICT'
+        '      ON UPDATE CASCADE'
+        ') ENGINE=InnoDB'
+    )
 
     
 if __name__ == '__main__':
