@@ -19,10 +19,6 @@ def main():
     # create database
     create_database(db, db_name)
     print("Using Database: %s" % db.database)
-
-    # create users
-    create_user_api(db)
-    create_user_dba(db)
     
     # create tables
     create_tables_outings(db)
