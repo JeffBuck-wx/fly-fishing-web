@@ -258,13 +258,13 @@ def create_tables_thread(db):
         ") ENGINE=InnoDB"
     )
     TABLES['thread_sizes'] = (
-        'CREATE TABLE IS NOT EXISTS thread_sizes ('
-        '    thread_size_id INT(2) NOT NULL AUTO_INCREMENT,'
-        '    size VARCHAR(16) NOT NULL,'
-        '    description VARCHAR(128),'
-        '  PRIMARY KEY (thread_size_id),'
-        '  CONTSTRAINT uc_thread_size UNIQUE (size)'
-        ') ENGINE=InnoDB'
+        "CREATE TABLE IF NOT EXISTS thread_sizes ("
+        "   thread_size_id INT(2) NOT NULL AUTO_INCREMENT,"
+        "    size VARCHAR(16) NOT NULL,"
+        "    description VARCHAR(128),"
+        "  PRIMARY KEY (thread_size_id),"
+        "  CONTSTRAINT uc_thread_size UNIQUE (size)"
+        ") ENGINE=InnoDB"
     )
     TABLES['thread'] = (
         "CREATE TABLE IF NOT EXISTS thread ("
@@ -300,7 +300,7 @@ def create_tables_thread(db):
 def create_tables_wire(db):
     TABLES = {}
     TABLES['wire_materials'] = (
-        'CREATE TABLE IS NOT EXISTS wire_materials ('
+        'CREATE TABLE IF NOT EXISTS wire_materials ('
         '    wire_material_id INT(2) NOT NULL AUTO_INCREMENT,'
         '    material VARCHAR(16) NOT NULL,'
         '    description VARCHAR(128),'
@@ -309,7 +309,7 @@ def create_tables_wire(db):
         ') ENGINE=InnoDB'
     )
     TABLES['wire_sizes'] = (
-        'CREATE TABLE IS NOT EXISTS wire_sizes ('
+        'CREATE TABLE IF NOT EXISTS wire_sizes ('
         '    wire_size_id INT(2) NOT NULL AUTO_INCREMENT,'
         '    size VARCHAR(16) NOT NULL,'
         '    description VARCHAR(128),'
@@ -341,7 +341,7 @@ def create_tables_wire(db):
 def create_tables_dubbing(db):
     TABLES = {}
     TABLES['dubbing_materials'] = (
-        'CREATE TABLE IS NOT EXISTS dubbing_materials ('
+        'CREATE TABLE IF NOT EXISTS dubbing_materials ('
         '    dubbing_material_id INT(2) NOT NULL AUTO_INCREMENT,'
         '    material VARCHAR(16) NOT NULL,'
         '    description VARCHAR(128),'
