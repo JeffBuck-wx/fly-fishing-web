@@ -21,10 +21,10 @@ def main():
     print("Using Database: %s" % db.database)
     
     # create tables
-    create_tables_outings(db)
-    create_tables_hooks(db)
-    create_tables_beads(db)
-    create_tables_thread(db)
+    #create_tables_outings(db)
+    #create_tables_hooks(db)
+    #create_tables_beads(db)
+    #create_tables_thread(db)
     create_tables_wire(db)
     create_tables_dubbing(db)
 
@@ -306,7 +306,7 @@ def create_tables_wire(db):
         '    material VARCHAR(16) NOT NULL,'
         '    description VARCHAR(128),'
         '  PRIMARY KEY (wire_material_id),'
-        '  CONSTRAINT uc_wire_material UNIQUE (matieral)'
+        '  CONSTRAINT uc_wire_material UNIQUE (material)'
         ') ENGINE=InnoDB'
     )
     TABLES['wire_sizes'] = (
@@ -328,12 +328,12 @@ def create_tables_wire(db):
         '  PRIMARY KEY (wire_id),'
         '  CONSTRAINT fk_wire_material'
         '    FOREIGN KEY (material)'
-        '      REFERENCES wire_material_types(material)'
+        '      REFERENCES wire_materials(material)'
         '      ON DELETE RESTRICT'
         '      ON UPDATE CASCADE,'
         '  CONSTRAINT fk_wire_size'
         '    FOREIGN KEY (size)'
-        '      REFERENCES wire_size_types(size)'
+        '      REFERENCES wire_sizes(size)'
         '      ON DELETE RESTRICT'
         '      ON UPDATE CASCADE'
         ') ENGINE=InnoDB'
@@ -349,7 +349,7 @@ def create_tables_dubbing(db):
         '    material VARCHAR(16) NOT NULL,'
         '    description VARCHAR(128),'
         '  PRIMARY KEY (dubbing_material_id),'
-        '  CONSTRAINT uc_dubbing_material UNIQUE (matieral)'
+        '  CONSTRAINT uc_dubbing_material UNIQUE (material)'
         ') ENGINE=InnoDB'
     )
     TABLES['dubbing'] = (
@@ -361,7 +361,7 @@ def create_tables_dubbing(db):
         '  PRIMARY KEY (dubbing_id),'
         '  CONSTRAINT fk_dubbing_material'
         '    FOREIGN KEY (material)'
-        '      REFERENCES wire_material_types(material)'
+        '      REFERENCES wire_materials(material)'
         '      ON DELETE RESTRICT'
         '      ON UPDATE CASCADE'
         ') ENGINE=InnoDB'
