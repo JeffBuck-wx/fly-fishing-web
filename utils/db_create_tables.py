@@ -263,7 +263,7 @@ def create_tables_thread(db):
         "    size VARCHAR(16) NOT NULL,"
         "    description VARCHAR(128),"
         "  PRIMARY KEY (thread_size_id),"
-        "  CONTSTRAINT uc_thread_size UNIQUE (size)"
+        "  CONSTRAINT uc_thread_size UNIQUE (size)"
         ") ENGINE=InnoDB"
     )
     TABLES['thread'] = (
@@ -305,7 +305,7 @@ def create_tables_wire(db):
         '    material VARCHAR(16) NOT NULL,'
         '    description VARCHAR(128),'
         '  PRIMARY KEY (wire_material_id),'
-        '  CONTSTRAINT uc_wire_material UNIQUE (matieral)'
+        '  CONSTRAINT uc_wire_material UNIQUE (matieral)'
         ') ENGINE=InnoDB'
     )
     TABLES['wire_sizes'] = (
@@ -314,7 +314,7 @@ def create_tables_wire(db):
         '    size VARCHAR(16) NOT NULL,'
         '    description VARCHAR(128),'
         '  PRIMARY KEY (wire_size_id),'
-        '  CONTSTRAINT uc_wire_size UNIQUE (size)'
+        '  CONSTRAINT uc_wire_size UNIQUE (size)'
         ') ENGINE=InnoDB'
     )
     TABLES['wire'] = (
@@ -346,7 +346,7 @@ def create_tables_dubbing(db):
         '    material VARCHAR(16) NOT NULL,'
         '    description VARCHAR(128),'
         '  PRIMARY KEY (dubbing_material_id),'
-        '  CONTSTRAINT uc_dubbing_material UNIQUE (matieral)'
+        '  CONSTRAINT uc_dubbing_material UNIQUE (matieral)'
         ') ENGINE=InnoDB'
     )
     TABLES['dubbing'] = (
