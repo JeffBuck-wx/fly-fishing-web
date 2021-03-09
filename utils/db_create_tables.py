@@ -338,6 +338,8 @@ def create_tables_wire(db):
         '      ON UPDATE CASCADE'
         ') ENGINE=InnoDB'
     )
+    db.create_multiple_tables(TABLES)
+    return
 
 def create_tables_dubbing(db):
     TABLES = {}
@@ -364,6 +366,8 @@ def create_tables_dubbing(db):
         '      ON UPDATE CASCADE'
         ') ENGINE=InnoDB'
     )
+    db.create_multiple_tables(TABLES)
+    return
 
     
 if __name__ == '__main__':
