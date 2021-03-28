@@ -70,14 +70,18 @@ class DBA:
 
 
     def close(self):
-        """Close Database connection."""
+        """Close Cursor and Database connection."""
         self.close_cursor()
+        self.close_conn()
+        return True
+
+    def close_conn(self):
+        """Close the Database connection."""
         self.conn.close()
         return True
 
-
     def close_cursor(self):
-        """Close cursor."""
+        """Close cursor connection."""
         self.cursor.close()
         return True
 

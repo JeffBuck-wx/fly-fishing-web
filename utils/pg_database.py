@@ -14,8 +14,14 @@ def pg_databases():
     }
     db = utils_pg.DBA(config)
     
+    # drop if exists
     db.drop_database('fly_fishing')
+    # create the database
     db.create_database('fly_fishing', 'fly_master')
+
+    # close up
+    db.close()
+
 
 
 if __name__ == '__main__':
