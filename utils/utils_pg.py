@@ -64,7 +64,7 @@ class DBA:
             self.cursor = self.conn.cursor()
             return_value = True
         except psycopg2.Error as err:
-            print("ERROR. Could not create cursor.")
+            print("ERROR. Could not create cursor. %s" % err)
             return_value = False
         return return_value
 
@@ -86,7 +86,7 @@ class DBA:
         return True
 
 
-    def setAutocommit(self, setting):
+    def set_autocommit(self, setting):
         """Set autocommit."""
         ret_val = False
         try:
@@ -133,7 +133,7 @@ class DBA:
 
     def insert_row(self, query, data):
         """Run an insert"""
-        description = 'Rows inserted'.format(len(data))
+        description = 'Rows inserted {}'.format(len(data))
         return_value = self.run_query(query, data, description)
         return return_value
 
@@ -148,12 +148,12 @@ class DBA:
 
         # disable transactions by setting autocommit to true, then revert setting
         ac_value = self.autocommit
-        self.setAutocommit(True)
+        self.set_autocommit(True)
         return_value = self.run_query(query, data, query_description=description)
-        self.setAutocommit(ac_value)
+        self.set_autocommit(ac_value)
 
         if return_value and use_database:
-            self.use_database(database_name)
+            self.use_database(database)
 
         return return_value
 
@@ -167,9 +167,9 @@ class DBA:
         
         # disable transactions by setting autocommit to true, then revert setting
         ac_value = self.autocommit
-        self.setAutocommit(True)
+        self.set_autocommit(True)
         return_value = self.run_query(query, query_description=description)
-        self.setAutocommit(ac_value)
+        self.set_autocommit(ac_value)
         
         return return_value
 
@@ -200,26 +200,57 @@ class DBA:
         return return_value_user
 
 
-    def set_grants(self, role, grants=None):
-        # Set grants
-        description = 'Updating grants on {} ({})'.format(database, username)
-        
-        # grant connect
-        query = "GRANT CONNECT ON DATABASE %s TO %s"
-        data = (database, username)
-  
-        
-        if grants == 'SUPERUSER':
-            query = "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA %s TO %s"
-        if grants == 'ADMIN':
-            query = "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA %s TO %s WITH GRANT OPTION"
-        else:
-            query = "GRANT INSERT, UPDATE, SELECT ON ALL TABLES IN SCHEMA  %s  TO %s"
-        data = (database, username)
-        return_value_grant = self.run_query(query, data, query_description=description)
-        print(query % data)
+    def database_grants(self, database, username, grants):
+        """Grant privileges on database."""
+        # chech the type of grants
+        grants = self.join_list(grants)
 
-        return return_value_grant
+        query = "GRANT {} ON DATABASE {} TO {}".format(grants, database, username)
+        description = "Granting %s to %s on database %s" % (grants, username, database)
+
+        return_value = self.run_query(query, query_description=description)
+        if return_value:
+            self.commit()
+        return return_value
+
+
+    def table_grants(self, tables, username, grants, schema='public'):
+        """Grant privileges on table(s)."""
+        # chech the type of grants
+        grants = self.join_list(grants)
+
+        # check tables for 'all'
+        if len(tables) == 0:
+            target = schema
+            query = "GRANT {} ON ALL TABLES IN  SCHEMA {} TO {}".format(grants, schema, username) 
+        else:
+            tables = self.join_list(tables)
+            target = tables
+            query = "GRANT {} ON TABLES {} TO {}".format(grants, target, username) 
+        description = "Granting %s on %s to %s" % (grants, target, username)
+
+        return_value = self.run_query(query, query_description=description)
+        if return_value:
+            self.commit()
+        return return_value
+
+
+    def join_list(self, list_or_string):
+        """Return a comma deliminated string of list, or orinal argument if it is a string."""
+        # chech the type of grants
+        # join if it's a list
+        if type(list_or_string).__name__ == 'list':
+            string = ','.join(list_or_string) 
+        else:
+            string = list_or_string
+        return string
+
+
+    def set_basic_grants(self, role, database):
+        """Set basic grants for database and public tables."""
+        self.database_grants(database, role, 'CONNECT')
+        self.table_grants([], role, ['SELECT', 'UPDATE', 'INSERT', 'DELETE'])
+        return
 
 
     def update_grants(self, username, database, grants=[]):
@@ -257,6 +288,8 @@ class DBA:
 
         if self.autocommit:
             return_value_commit = self.commit()
+        else:
+            return_value_commit = True # no commit no error
 
         return return_value and return_value_commit
 
@@ -268,5 +301,5 @@ class DBA:
             ret_val = True
         except:
             print("Error commiting changes.") 
-            ret_Val = False
+            ret_val = False
         return ret_val

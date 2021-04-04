@@ -6,12 +6,10 @@ import sys
 
 def pg_users():
     # connect to database using utils_pg module
-    db_name = 'postgres'
     config = {
-        'user': 'jeff',
-        'password':'Diana1',
-        'host':'localhost',
-        'dbname': db_name
+        'user': 'postgres',
+        'password':'Minnesota+1991',
+        'host':'localhost'
     }
     db = utils_pg.DBA(config, autocommit=True)
 
@@ -23,6 +21,9 @@ def pg_users():
     for user in users:
         db.drop_user(user['username'])  # remove if exists
         db.create_user(**user)
+
+    # close up
+    db.close()
 
 
 if __name__ == '__main__':
