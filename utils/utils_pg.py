@@ -252,6 +252,18 @@ class DBA:
         self.table_grants([], role, ['SELECT', 'UPDATE', 'INSERT', 'DELETE'])
         return
 
+    def revoke_table_grants(self, user, tables):
+        """Revoke table privileges."""
+        return
+
+    def revoke_table_grants(sef, user, database):
+        """Revoke database privileges."""
+        return
+
+    def revoke_all_grants(self, user, tables, database, schema='public'):
+        """Revoke all privileges from tables and database."""
+        return 
+
 
     def update_grants(self, username, database, grants=[]):
         """Assign limitedgrants to user"""
