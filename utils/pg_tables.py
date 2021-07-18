@@ -54,7 +54,7 @@ def create_tables_outings(db):
         "    tiger INT NOT NULL DEFAULT 0,"
         "    other INT NOT NULL DEFAULT 0,"
         "    PRIMARY KEY (trout_outing_id)"
-        ") ENGINE=InnoDB"
+        ")"
     )
     db.create_multiple_tables(TABLES)
     return
@@ -68,7 +68,7 @@ def create_tables_hooks(db):
         "    description VARCHAR(32),"
         "  PRIMARY KEY (hook_length_id),"
         "  CONSTRAINT uc_hook_length_name UNIQUE (length)"
-        ") ENGINE=InnoDB"
+        ")"
     )
     TABLES['hook_weights'] = (
         "CREATE TABLE IF NOT EXISTS hook_weights ("
@@ -77,7 +77,7 @@ def create_tables_hooks(db):
         "    description VARCHAR(32),"
         "  PRIMARY KEY (hook_weight_id),"
         "  CONSTRAINT uc_hook_weight_name UNIQUE (weight)"
-        ") ENGINE=InnoDB"
+        ")"
     )   
     TABLES['eye_types'] = (
         "CREATE TABLE IF NOT EXISTS eye_types ("
@@ -86,7 +86,7 @@ def create_tables_hooks(db):
         "    description VARCHAR(512),"
         "  PRIMARY KEY (eye_type_id),"
         "  CONSTRAINT uc_eye_type UNIQUE (type)" 
-        ") ENGINE=InnoDB"
+        ")"
     )
     TABLES['hook_types'] = (
         "CREATE TABLE IF NOT EXISTS hook_types ("
@@ -95,7 +95,7 @@ def create_tables_hooks(db):
         "    description VARCHAR(512),"
         "  PRIMARY KEY (hook_type_id),"
         "  CONSTRAINT uc_hook_type UNIQUE (type)" 
-        ") ENGINE=InnoDB"
+        ")"
     )
     TABLES['bend_types'] = (
         "CREATE TABLE IF NOT EXISTS bend_types ("
@@ -104,7 +104,7 @@ def create_tables_hooks(db):
         "    description VARCHAR(512),"
         "  PRIMARY KEY (bend_type_id),"
         "  CONSTRAINT uc_bend_type UNIQUE (type)" 
-        ") ENGINE=InnoDB"
+        ")"
     )
     TABLES['shank_types'] = (
         "CREATE TABLE IF NOT EXISTS shank_types ("
@@ -113,7 +113,7 @@ def create_tables_hooks(db):
         "    description VARCHAR(512),"
         "  PRIMARY KEY (shank_type_id),"
         "  CONSTRAINT uc_shank_type UNIQUE (type)" 
-        ") ENGINE=InnoDB"
+        ")"
     )
     TABLES['hooks'] = (
         "CREATE TABLE IF NOT EXISTS hooks ("
@@ -158,7 +158,7 @@ def create_tables_hooks(db):
         "      REFERENCES shank_types (type)"
         "      ON DELETE RESTRICT"
         "      ON UPDATE CASCADE"        
-        ") ENGINE=InnoDB"
+        ")"
     )
     
     db.create_multiple_tables(TABLES)
@@ -173,7 +173,7 @@ def create_tables_beads(db):
         "    description VARCHAR(128),"
         "  PRIMARY KEY (hole_type_id),"
         "  CONSTRAINT uc_bead_hole_type UNIQUE (type)"
-        ") ENGINE=InnoDB"
+        ")"
     )
     TABLES['bead_shapes'] = (
         "CREATE TABLE IF NOT EXISTS bead_shapes ("
@@ -182,7 +182,7 @@ def create_tables_beads(db):
         "    description VARCHAR(128),"
         "  PRIMARY KEY (bead_shape_id),"
         "  CONSTRAINT uc_bead_shape_type UNIQUE (shape)"
-        ") ENGINE=InnoDB"
+        ")"
     )
     TABLES['bead_material_types'] = (
         "CREATE TABLE IF NOT EXISTS bead_material_types ("
@@ -191,7 +191,7 @@ def create_tables_beads(db):
         "    description VARCHAR(128),"
         "  PRIMARY KEY (bead_material_id),"
         "  CONSTRAINT uc_bead_material_type UNIQUE (material)"
-        ") ENGINE=InnoDB"
+        ")"
     )
     TABLES['beads'] = (
         "CREATE TABLE IF NOT EXISTS beads ("
@@ -218,7 +218,7 @@ def create_tables_beads(db):
         "      REFERENCES bead_material_types(material)"
         "      ON DELETE RESTRICT"
         "      ON UPDATE CASCADE"
-        ") ENGINE=InnoDB"
+        ")"
     )
     TABLES['bead_to_hook'] = (
         "CREATE TABLE IF NOT EXISTS bead_to_hook ("
@@ -227,7 +227,7 @@ def create_tables_beads(db):
         "    bead_size VARCHAR(8) NOT NULL,"
         "    hook_size INT NOT NULL,"
         "  PRIMARY KEY (bead_to_hook_id)"
-        ") ENGINE=InnoDB"
+        ")"
     )
     
     db.create_multiple_tables(TABLES)
@@ -242,7 +242,7 @@ def create_tables_thread(db):
         "    description VARCHAR(128),"
         "  PRIMARY KEY (thread_material_id),"
         "  CONSTRAINT uc_thread_material UNIQUE (material)"
-        ") ENGINE=InnoDB"
+        ")"
     )
     TABLES['thread_twist_types'] = (
         "CREATE TABLE IF NOT EXISTS thread_twist_types ("
@@ -251,7 +251,7 @@ def create_tables_thread(db):
         "    description VARCHAR(128),"
         "  PRIMARY KEY (thread_twist_id),"
         "  CONSTRAINT uc_thread_twist UNIQUE (twist)"
-        ") ENGINE=InnoDB"
+        ")"
     )
     TABLES['thread_sizes'] = (
         "CREATE TABLE IF NOT EXISTS thread_sizes ("
@@ -260,7 +260,7 @@ def create_tables_thread(db):
         "    description VARCHAR(128),"
         "  PRIMARY KEY (thread_size_id),"
         "  CONSTRAINT uc_thread_size UNIQUE (size)"
-        ") ENGINE=InnoDB"
+        ")"
     )
     TABLES['thread'] = (
         "CREATE TABLE IF NOT EXISTS thread ("
@@ -288,7 +288,7 @@ def create_tables_thread(db):
         "      REFERENCES thread_sizes(size)"
         "      ON DELETE RESTRICT"
         "      ON UPDATE CASCADE"
-        ") ENGINE=InnoDB"
+        ")"
     )
     db.create_multiple_tables(TABLES)
     return
@@ -302,7 +302,7 @@ def create_tables_wire(db):
         '    description VARCHAR(128),'
         '  PRIMARY KEY (wire_material_id),'
         '  CONSTRAINT uc_wire_material UNIQUE (material)'
-        ') ENGINE=InnoDB'
+        ')'
     )
     TABLES['wire_sizes'] = (
         'CREATE TABLE IF NOT EXISTS wire_sizes ('
@@ -311,7 +311,7 @@ def create_tables_wire(db):
         '    description VARCHAR(128),'
         '  PRIMARY KEY (wire_size_id),'
         '  CONSTRAINT uc_wire_size UNIQUE (size)'
-        ') ENGINE=InnoDB'
+        ')'
     )
     TABLES['wire'] = (
         'CREATE TABLE IF NOT EXISTS wire ('
@@ -331,7 +331,7 @@ def create_tables_wire(db):
         '      REFERENCES wire_sizes(size)'
         '      ON DELETE RESTRICT'
         '      ON UPDATE CASCADE'
-        ') ENGINE=InnoDB'
+        ')'
     )
     db.create_multiple_tables(TABLES)
     return
@@ -345,7 +345,7 @@ def create_tables_dubbing(db):
         '    description VARCHAR(128),'
         '  PRIMARY KEY (dubbing_material_id),'
         '  CONSTRAINT uc_dubbing_material UNIQUE (material)'
-        ') ENGINE=InnoDB'
+        ')'
     )
     TABLES['dubbing'] = (
         'CREATE TABLE IF NOT EXISTS dubbing ('
@@ -359,7 +359,7 @@ def create_tables_dubbing(db):
         '      REFERENCES wire_materials(material)'
         '      ON DELETE RESTRICT'
         '      ON UPDATE CASCADE'
-        ') ENGINE=InnoDB'
+        ')'
     )
     db.create_multiple_tables(TABLES)
     return
