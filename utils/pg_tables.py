@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import utils_pg
 import time
+import sys
 
 
 def main():
@@ -8,18 +9,15 @@ def main():
     config = {
         'user': 'jeff',
         'password':'Diana1',
-        'host':'localhost'
+        'host':'localhost',
+        'dbname':'fly_fishing'
     }
     db = utils_pg.DBA(config)
     db_name = 'fly_fishing'
     
-    # drop any existing database
-    drop_database(db, db_name)
-
-    # create database
-    create_database(db, db_name)
     print("Using Database: %s" % db.database)
-    
+    sys.exit()
+
     # create tables
     create_tables_outings(db)
     create_tables_hooks(db)
