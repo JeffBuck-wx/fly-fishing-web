@@ -43,7 +43,7 @@ def create_tables_outings(db):
     # table 1
     TABLES["trout_outings"] = (
         "CREATE TABLE IF NOT EXISTS trout_outings ("
-        "    trout_outing_id INT NOT NULL AUTO_INCREMENT,"
+        "    trout_outing_id SERIAL NOT NULL,"
         "    outing_date DATE NOT NULL,"
         "    location VARCHAR(512) NOT NULL,"
         "    weather VARCHAR(64) NOT NULL,"
@@ -63,7 +63,7 @@ def create_tables_hooks(db):
     TABLES = {}
     TABLES['hook_lengths'] = (
         "CREATE TABLE IF NOT EXISTS hook_lengths ("
-        "    hook_length_id INT NOT NULL AUTO_INCREMENT,"
+        "    hook_length_id SERIAL NOT NULL,"
         "    length VARCHAR(4) NOT NULL,"
         "    description VARCHAR(32),"
         "  PRIMARY KEY (hook_length_id),"
@@ -72,7 +72,7 @@ def create_tables_hooks(db):
     )
     TABLES['hook_weights'] = (
         "CREATE TABLE IF NOT EXISTS hook_weights ("
-        "    hook_weight_id INT NOT NULL AUTO_INCREMENT,"
+        "    hook_weight_id SERIAL NOT NULL,"
         "    weight VARCHAR(4) NOT NULL,"
         "    description VARCHAR(32),"
         "  PRIMARY KEY (hook_weight_id),"
@@ -81,7 +81,7 @@ def create_tables_hooks(db):
     )   
     TABLES['eye_types'] = (
         "CREATE TABLE IF NOT EXISTS eye_types ("
-        "    eye_type_id INT NOT NULL AUTO_INCREMENT,"
+        "    eye_type_id SERIAL NOT NULL,"
         "    type VARCHAR(16) NOT NULL,"
         "    description VARCHAR(512),"
         "  PRIMARY KEY (eye_type_id),"
@@ -90,7 +90,7 @@ def create_tables_hooks(db):
     )
     TABLES['hook_types'] = (
         "CREATE TABLE IF NOT EXISTS hook_types ("
-        "    hook_type_id INT NOT NULL AUTO_INCREMENT,"
+        "    hook_type_id SERIAL NOT NULL,"
         "    type VARCHAR(16) NOT NULL,"
         "    description VARCHAR(512),"
         "  PRIMARY KEY (hook_type_id),"
@@ -99,7 +99,7 @@ def create_tables_hooks(db):
     )
     TABLES['bend_types'] = (
         "CREATE TABLE IF NOT EXISTS bend_types ("
-        "    bend_type_id INT NOT NULL AUTO_INCREMENT,"
+        "    bend_type_id SERIAL NOT NULL,"
         "    type VARCHAR(16) NOT NULL,"
         "    description VARCHAR(512),"
         "  PRIMARY KEY (bend_type_id),"
@@ -108,7 +108,7 @@ def create_tables_hooks(db):
     )
     TABLES['shank_types'] = (
         "CREATE TABLE IF NOT EXISTS shank_types ("
-        "    shank_type_id INT NOT NULL AUTO_INCREMENT,"
+        "    shank_type_id SERIAL NOT NULL,"
         "    type VARCHAR(16) NOT NULL,"
         "    description VARCHAR(512),"
         "  PRIMARY KEY (shank_type_id),"
@@ -117,7 +117,7 @@ def create_tables_hooks(db):
     )
     TABLES['hooks'] = (
         "CREATE TABLE IF NOT EXISTS hooks ("
-        "    hook_id INT NOT NULL AUTO_INCREMENT,"
+        "    hook_id SERIAL NOT NULL,"
         "    brand VARCHAR(16) NOT NULL,"
         "    model VARCHAR(16) NOT NULL,"
         "    length VARCHAR(4) NOT NULL DEFAULT '0X',"
@@ -168,7 +168,7 @@ def create_tables_beads(db):
     TABLES = {}
     TABLES['hole_types'] = (
         "CREATE TABLE IF NOT EXISTS hole_types ("
-        "    hole_type_id INT NOT NULL AUTO_INCREMENT,"
+        "    hole_type_id SERIAL NOT NULL,"
         "    type VARCHAR(16) NOT NULL,"
         "    description VARCHAR(128),"
         "  PRIMARY KEY (hole_type_id),"
@@ -177,7 +177,7 @@ def create_tables_beads(db):
     )
     TABLES['bead_shapes'] = (
         "CREATE TABLE IF NOT EXISTS bead_shapes ("
-        "    bead_shape_id INT NOT NULL AUTO_INCREMENT,"
+        "    bead_shape_id SERIAL NOT NULL,"
         "    shape VARCHAR(16) NOT NULL,"
         "    description VARCHAR(128),"
         "  PRIMARY KEY (bead_shape_id),"
@@ -186,7 +186,7 @@ def create_tables_beads(db):
     )
     TABLES['bead_material_types'] = (
         "CREATE TABLE IF NOT EXISTS bead_material_types ("
-        "    bead_material_id INT NOT NULL AUTO_INCREMENT,"
+        "    bead_material_id SERIAL NOT NULL,"
         "    material VARCHAR(16) NOT NULL,"
         "    description VARCHAR(128),"
         "  PRIMARY KEY (bead_material_id),"
@@ -195,7 +195,7 @@ def create_tables_beads(db):
     )
     TABLES['beads'] = (
         "CREATE TABLE IF NOT EXISTS beads ("
-        "    bead_id INT NOT NULL AUTO_INCREMENT,"
+        "    bead_id SERIAL NOT NULL,"
         "    size VARCHAR(8) NOT NULL,"
         "    unit ENUM('standard', 'metric') NOT NULL,"
         "    shape VARCHAR(16) NOT NULL,"
@@ -222,7 +222,7 @@ def create_tables_beads(db):
     )
     TABLES['bead_to_hook'] = (
         "CREATE TABLE IF NOT EXISTS bead_to_hook ("
-        "    bead_to_hook_id INT NOT NULL AUTO_INCREMENT,"
+        "    bead_to_hook_id SERIAL NOT NULL,"
         "    baed_id INT NOT NULL,"    
         "    bead_size VARCHAR(8) NOT NULL,"
         "    hook_size INT NOT NULL,"
@@ -237,7 +237,7 @@ def create_tables_thread(db):
     TABLES = {}
     TABLES['thread_material_types'] = (
         "CREATE TABLE IF NOT EXISTS thread_material_types ("
-        "    thread_material_id INT NOT NULL AUTO_INCREMENT,"
+        "    thread_material_id SERIAL NOT NULL,"
         "    material VARCHAR(16) NOT NULL,"
         "    description VARCHAR(128),"
         "  PRIMARY KEY (thread_material_id),"
@@ -246,7 +246,7 @@ def create_tables_thread(db):
     )
     TABLES['thread_twist_types'] = (
         "CREATE TABLE IF NOT EXISTS thread_twist_types ("
-        "    thread_twist_id INT NOT NULL AUTO_INCREMENT,"
+        "    thread_twist_id SERIAL NOT NULL,"
         "    twist VARCHAR(16) NOT NULL,"
         "    description VARCHAR(128),"
         "  PRIMARY KEY (thread_twist_id),"
@@ -255,7 +255,7 @@ def create_tables_thread(db):
     )
     TABLES['thread_sizes'] = (
         "CREATE TABLE IF NOT EXISTS thread_sizes ("
-        "   thread_size_id INT NOT NULL AUTO_INCREMENT,"
+        "   thread_size_id SERIAL NOT NULL,"
         "    size VARCHAR(16) NOT NULL,"
         "    description VARCHAR(128),"
         "  PRIMARY KEY (thread_size_id),"
@@ -264,7 +264,7 @@ def create_tables_thread(db):
     )
     TABLES['thread'] = (
         "CREATE TABLE IF NOT EXISTS thread ("
-        "    thread_id INT NOT NULL AUTO_INCREMENT,"
+        "    thread_id SERIAL NOT NULL,"
         "    brand VARCHAR(16) NOT NULL,"
         "    color VARCHAR(16) NOT NULL,"
         "    material VARCHAR(16) NOT NULL,"
@@ -297,7 +297,7 @@ def create_tables_wire(db):
     TABLES = {}
     TABLES['wire_materials'] = (
         'CREATE TABLE IF NOT EXISTS wire_materials ('
-        '    wire_material_id INT NOT NULL AUTO_INCREMENT,'
+        '    wire_material_id SERIAL NOT NULL,'
         '    material VARCHAR(16) NOT NULL,'
         '    description VARCHAR(128),'
         '  PRIMARY KEY (wire_material_id),'
@@ -306,7 +306,7 @@ def create_tables_wire(db):
     )
     TABLES['wire_sizes'] = (
         'CREATE TABLE IF NOT EXISTS wire_sizes ('
-        '    wire_size_id INT NOT NULL AUTO_INCREMENT,'
+        '    wire_size_id SERIAL NOT NULL,'
         '    size VARCHAR(16) NOT NULL,'
         '    description VARCHAR(128),'
         '  PRIMARY KEY (wire_size_id),'
@@ -315,7 +315,7 @@ def create_tables_wire(db):
     )
     TABLES['wire'] = (
         'CREATE TABLE IF NOT EXISTS wire ('
-        '    wire_id INT NOT NULL AUTO_INCREMENT,'
+        '    wire_id SERIAL NOT NULL,'
         '    brand VARCHAR(16) NOT NULL,'
         '    color VARCHAR(16) NOT NULL,'
         '    material VARCHAR(16) NOT NULL,'
@@ -340,7 +340,7 @@ def create_tables_dubbing(db):
     TABLES = {}
     TABLES['dubbing_materials'] = (
         'CREATE TABLE IF NOT EXISTS dubbing_materials ('
-        '    dubbing_material_id INT NOT NULL AUTO_INCREMENT,'
+        '    dubbing_material_id SERIAL NOT NULL,'
         '    material VARCHAR(16) NOT NULL,'
         '    description VARCHAR(128),'
         '  PRIMARY KEY (dubbing_material_id),'
@@ -349,7 +349,7 @@ def create_tables_dubbing(db):
     )
     TABLES['dubbing'] = (
         'CREATE TABLE IF NOT EXISTS dubbing ('
-        '    dubbing_id INT NOT NULL AUTO_INCREMENT,'
+        '    dubbing_id SERIAL NOT NULL,'
         '    brand VARCHAR(16) NOT NULL,'
         '    color VARCHAR(16) NOT NULL,'
         '    material VARCHAR(16) NOT NULL,'
