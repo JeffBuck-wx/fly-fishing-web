@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import utils_pg
 import time
-import sys
+
 
 
 def main():
@@ -13,10 +13,7 @@ def main():
         'dbname':'fly_fishing'
     }
     db = utils_pg.DBA(config)
-    db_name = 'fly_fishing'
-    
     print("Using Database: %s" % db.database)
-    sys.exit()
 
     # create tables
     create_tables_outings(db)
