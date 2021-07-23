@@ -166,6 +166,15 @@ def create_tables_hooks(db):
 
 def create_tables_beads(db):
     TABLES = {}
+    TABLES['units_names'] = (
+        "CREATE TABLE IF NOT EXISTS units_names ("
+        "    units_name_id SERIAL NOT NULL,"
+        "    units VARCHAR(16) NOT NULL,"
+        "    description VARCHAR(128),"
+        "  PRIMARY KEY (units_name_id),"
+        "  CONSTRAINT uc_units_name UNIQUE (units)"
+        ")"
+    )
     TABLES['hole_types'] = (
         "CREATE TABLE IF NOT EXISTS hole_types ("
         "    hole_type_id SERIAL NOT NULL,"
@@ -197,12 +206,17 @@ def create_tables_beads(db):
         "CREATE TABLE IF NOT EXISTS beads ("
         "    bead_id SERIAL NOT NULL,"
         "    size VARCHAR(8) NOT NULL,"
-        "    unit ENUM('standard', 'metric') NOT NULL,"
+        "    units VARCHAR(16) NOT NULL,"
         "    shape VARCHAR(16) NOT NULL,"
         "    color VARCHAR(16) NOT NULL,"
         "    material VARCHAR(16) NOT NULL,"
         "    hole_type VARCHAR(16) NOT NULL,"
         "  PRIMARY KEY (bead_id),"
+        "  CONSTRAINT fk_units_type"
+        "    FOREIGN KEY (units)"
+        "      REFERENCES units_names(units)"
+        "      ON DELETE RESTRICT"
+        "      ON UPDATE CASCADE,"
         "  CONSTRAINT fk_hole_type"
         "    FOREIGN KEY (hole_type)"
         "      REFERENCES hole_types(type)"
