@@ -283,7 +283,7 @@ def create_tables_thread(db):
         "    color VARCHAR(16) NOT NULL,"
         "    material VARCHAR(16) NOT NULL,"
         "    size VARCHAR(4) NOT NULL,"
-        "    waxed BOOLEAN NOT NULL DEFAULT 0,"
+        "    waxed BOOLEAN NOT NULL DEFAULT 'f',"
         "    twist VARCHAR(16) NOT NULL," 
         "    strength INT,"
         "  PRIMARY KEY (thread_id),"
