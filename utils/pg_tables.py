@@ -126,7 +126,7 @@ def create_tables_hooks(db):
         "    hook_type VARCHAR(16) NOT NULL,"
         "    bend_type VARCHAR(16) NOT NULL,"
         "    shank_type VARCHAR(16) NOT NULL,"
-        "    barbless BOOLEAN NOT NULL DEFAULT 0,"
+        "    barbless BOOLEAN DEFAULT 'f',"
         "  PRIMARY KEY (hook_id),"
         "  CONSTRAINT fk_hook_length"
         "    FOREIGN KEY (length)"
