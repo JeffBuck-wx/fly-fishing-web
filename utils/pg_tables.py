@@ -16,12 +16,14 @@ def main():
     print("Using Database: %s" % db.database)
 
     # create tables
+    db.set_autocommit(True)
     create_tables_outings(db)
     create_tables_hooks(db)
     create_tables_beads(db)
     create_tables_thread(db)
     create_tables_wire(db)
     create_tables_dubbing(db)
+    db.set_autocommit(False)
 
     #close
     db.close()
