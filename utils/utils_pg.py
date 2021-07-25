@@ -315,3 +315,28 @@ class DBA:
             print("Error commiting changes.") 
             ret_val = False
         return ret_val
+
+    
+    def run_sql_scipt(self, sqlFile):
+        """Run the a SQL script file."""
+        # turn off autocommit
+        ac_status = self.autocommit
+        if ac_status:
+            self.set_autocommit(False)
+        
+        ret_val = True
+        try:
+            self.cursor.execute(open(sqlFile, "r").read())
+        except psycopg2.Error as err:
+            print(err)
+            ret_val = False
+        except FileNotFoundError as err:
+            ret_val = False
+            print(err)
+        
+
+        # restore original autocommit status
+        self.set_autocommit(ac_status)
+
+        return ret_val
+

@@ -277,7 +277,7 @@
           PRIMARY KEY (dubbing_id),
           CONSTRAINT fk_dubbing_material
             FOREIGN KEY (material)
-              REFERENCES wire_materials(material)
+              REFERENCES dubbing_materials(material)
               ON DELETE RESTRICT
               ON UPDATE CASCADE
         );
