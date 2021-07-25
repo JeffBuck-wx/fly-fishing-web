@@ -90,10 +90,11 @@ class DBA:
         """Set autocommit."""
         ret_val = False
         try:
-            self.conn.autocommit = setting
             self.autocommit = setting
+            self.conn.autocommit = setting
             ret_val = True
-        except:
+        except Exception as e:
+            print(e)
             print("ERROR. Could not set autocommit ({})".format(setting))
         return ret_val
 
@@ -316,27 +317,40 @@ class DBA:
             ret_val = False
         return ret_val
 
-    
-    def run_sql_scipt(self, sqlFile):
+
+    def rollback(self):
+        """Commit DB changes."""
+        try:
+            self.conn.rollback()
+            ret_val = True
+        except:
+            print("Error rolling back changes.") 
+            ret_val = False
+        return ret_val
+
+
+    def run_sql_script(self, sqlFile):
         """Run the a SQL script file."""
-        # turn off autocommit
-        ac_status = self.autocommit
-        if ac_status:
+        # Turn off autocommit
+        ac_value = self.autocommit
+        if ac_value:
             self.set_autocommit(False)
-        
+
         ret_val = True
         try:
-            self.cursor.execute(open(sqlFile, "r").read())
+            sql_status = self.cursor.execute(open(sqlFile, "r").read())
+            print("STATUS: {}".format(sql_status))
+            print("Yes!!!!")
         except psycopg2.Error as err:
             print(err)
             ret_val = False
         except FileNotFoundError as err:
             ret_val = False
             print(err)
-        
 
-        # restore original autocommit status
-        self.set_autocommit(ac_status)
+        # restore original autocommit setting
+        self.conn.rollback() # clear the transaction, commits must be done in the script
+        self.set_autocommit(ac_value)
 
         return ret_val
 

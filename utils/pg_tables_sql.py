@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import utils_pg
-import time
 
 
 
@@ -16,15 +15,14 @@ def main():
     print("Using Database: %s" % db.database)
 
     # create tables
-    db.set_autocommit(True)
-
+    create_tables_from_script(db, './tables_products.sql')
     db.close()
 
     print("Works")
     return
 
-def create_tables_from_script(script):
-
+def create_tables_from_script(db, script):
+    db.run_sql_script(script)
     return
 
     
