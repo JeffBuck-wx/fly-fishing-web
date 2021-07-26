@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS materials (
     model VARCHAR(64) NOT NULL,
     description VARCHAR(512),
     PRIMARY KEY (category, id),
-    UNIQUE
+    UNIQUE (id)
 );
 
 CREATE TABLE IF NOT EXISTS hooks (
