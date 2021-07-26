@@ -32,17 +32,17 @@ CREATE TYPE shank_type AS ENUM ('curved', 'humped', 'straight');
 COMMIT;
 
 CREATE TABLE IF NOT EXISTS materials (
-    id SERIAL NOT NULL,
+    material_id SERIAL NOT NULL,
     category product_category NOT NULL,
     brand VARCHAR(64) NOT NULL,
     model VARCHAR(64) NOT NULL,
     description VARCHAR(512),
-    PRIMARY KEY (category, id),
-    UNIQUE (id)
+    PRIMARY KEY (category, material_id),
+    UNIQUE (material_id)
 );
 
 CREATE TABLE IF NOT EXISTS hooks (
-    id SERIAL NOT NULL,
+    hook_id SERIAL NOT NULL,
     category product_category CHECK (category = 'hook'),
     size hook_size NOT NULL,
     weight hook_weight NOT NULL,
@@ -50,10 +50,11 @@ CREATE TABLE IF NOT EXISTS hooks (
     eye eye_type NOT NULL,
     bend bend_type,
     shank shank_type,
-    PRIMARY KEY (category, id),
+    PRIMARY KEY (category, hook_id),
+    UNIQUE (hook_id),
     CONSTRAINT fk_hook_id
-        FOREIGN KEY (category, id)
-            REFERENCES materials (category, id)
+        FOREIGN KEY (category, hook_id)
+            REFERENCES materials (category, material_id)
             ON DELETE CASCADE
 );
 COMMIT;
