@@ -14,12 +14,10 @@ def pg_users():
     db = utils_pg.DBA(config, autocommit=True)
 
     users = [
-        {'username': 'fly_master', 'password': 'Orvis.Hydros.Mend'},
         {'username': 'fly_fisher', 'password': 'WhitewaterNo.5_45'},
     ]
 
     for user in users:
-        db.drop_user(user['username'])  # remove if exists
         db.create_user(**user)
 
     # close up
