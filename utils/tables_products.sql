@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS beads (
     UNIQUE (id),
     CONSTRAINT fk_bead_id
         FOREIGN KEY (category, id)
-            REFERENCES material (category, id)
+            REFERENCES materials (category, id)
             ON DELETE CASCADE
             ON UPDATE CASCADE 
 );
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS thread (
     UNIQUE (id),
     CONSTRAINT fk_thread_id
         FOREIGN KEY (category, id)
-            REFERENCES material (category, id)
+            REFERENCES materials (category, id)
             ON DELETE CASCADE
             ON UPDATE CASCADE 
 );
