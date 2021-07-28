@@ -18,6 +18,7 @@ def pg_users():
     ]
 
     for user in users:
+        db.drop_user(user['username'])  # remove if exists
         db.create_user(**user)
 
     # close up
