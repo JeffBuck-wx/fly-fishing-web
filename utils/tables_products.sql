@@ -35,7 +35,7 @@ CREATE TYPE bead_material AS ENUM ('nickel', 'tungsten', 'other');
 CREATE TYPE bead_shape AS ENUM ('round', 'cone', 'prism', 'fish head', 'nymph head', 'other');
 CREATE TYPE bead_hole AS ENUM ('counter sunk', 'slotted', 'other');
 CREATE TYPE thread_size AS ENUM ('70 denier', '140 denier', '210 denier', '280 denier', '12/0', '8/0', '6/0');
-CREATE TYPE thread_twist AS ENUM ('straight', 'twist', 'braid')
+CREATE TYPE thread_twist AS ENUM ('straight', 'twist', 'braid');
 COMMIT;
 
 CREATE TABLE IF NOT EXISTS materials (
