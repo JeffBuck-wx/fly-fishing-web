@@ -23,7 +23,7 @@ CREATE TYPE bead_hole AS ENUM ('counter sunk', 'slotted', 'other');
 CREATE TYPE thread_size AS ENUM ('70 denier', '140 denier', '210 denier', '280 denier', '12/0', '8/0', '6/0');
 CREATE TYPE thread_twist AS ENUM ('straight', 'twist', 'braid');
 CREATE TYPE wire_material AS ENUM('lead', 'lead-free', 'copper', 'mono-filament', 'other');
-CREATE TYPE wire_size as ENUM ('x-small', 'small', 'brassie', 'medium', 'large', '.010 in', '.015 in', '.020 in', '.025 in', '030 in', '.035 in');4
+CREATE TYPE wire_size as ENUM ('x-small', 'small', 'brassie', 'medium', 'large', '.010 in', '.015 in', '.020 in', '.025 in', '030 in', '.035 in');
 CREATE TYPE dubbing_material as ENUM ('synthetic fur', 'natural fur', 'antron', 'rabbit fur', 'beaver fur', 'squirrel fur', 'natural/synthic blend', 'natural blend', 'synthetic blend', 'other');
 COMMIT;
 
