@@ -1,11 +1,11 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 
-app.get('/*', (req, res) => {
-  res.send("Hello World")
+app.get('/', (req, res) => {
+    res.status(200).send('Welcome to Tiger Trout!');
 });
 
-app.listen(3001, () => {
-  console.log("running on port 3001.")
+const port = 3000;
+app.listen(port, () => {
+    console.log('App running on port 3000.')
 });
-
