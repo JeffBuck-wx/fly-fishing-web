@@ -8,8 +8,14 @@ app.use(cors());
 app.use(express.json()); //req.body
 
 //ROUTES//
-app.get('/*', (req, res) => {
-  res.send("Hello World")
+app.get("/todos", async (req, res) => {
+  try {
+    const allFish = await pool.query("SELECT * FROM fish");
+    res.json(allFish.rows);
+    console.log(allFish.rows);
+  } catch (err) {
+    console.error(err.message);
+  }
 });
 
 const port = 3000;
