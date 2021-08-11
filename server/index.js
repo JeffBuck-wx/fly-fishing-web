@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json()); //req.body
 
 //ROUTES//
-app.get("/todos", async (req, res) => {
+app.get("/fish", async (req, res) => {
   try {
     const allFish = await pool.query("SELECT * FROM fish");
     res.json(allFish.rows);
